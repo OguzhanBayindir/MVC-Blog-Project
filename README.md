@@ -1,2 +1,2 @@
 # Ugur-Salin-Repository
-Projects Completed
+MVC Blog Project with  Entity Framework Code-First.
