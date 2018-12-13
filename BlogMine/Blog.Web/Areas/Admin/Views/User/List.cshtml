@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Blog.Entity.Model.User>
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h2>List</h2>
+
+<p>@Html.ActionLink("Create New", "AddUser")</p>
+
+
+<div>@ViewBag.Message</div>
+
+    <table class="progress-table" style="width:1000px;">
+
+
+        <tr class="table-head">
+
+            <th>@Html.DisplayNameFor(model => model.Username)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            <th>@Html.DisplayNameFor(model => model.Password)</th>
+            <th>@Html.DisplayNameFor(model => model.Fullname)</th>
+            <th>@Html.DisplayNameFor(model => model.Photo)</th>
+            <th>@Html.DisplayNameFor(model => model.UserRole.Rolename)</th>
+
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class="sick">
+                <td class="country">@Html.DisplayFor(t => item.Username)</td>
+                <td class="country">@Html.DisplayFor(t => item.Email)</td>
+                <td class="country">@Html.DisplayFor(t => item.Password)</td>
+                <td class="country">@Html.DisplayFor(t => item.Fullname)</td>
+                <td class="country"><img src="~/Upload/@item.Photo" class="img-circle" style="width:75px" height="75" /></td>
+
+
+                <td class="country">@Html.DisplayFor(t => item.UserRole.Rolename)</td>
+
+                <td class="country">@Html.ActionLink("Edit", "Edit", new { id = item.UserID })
+                 @Html.ActionLink("Delete", "Delete", new { id = item.UserID })
+                </td>
+
+            </tr>
+        }
+      
+                @*<div class="table-head">
+                    <div class="serial">#</div>
+                    <div class="country">Countries</div>
+                    <div class="visit">Visits</div>
+                    <div class="percentage">Percentages</div>*@
+
+
+     </table>
+
+
+

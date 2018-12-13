@@ -1,0 +1,90 @@
+﻿@using Blog.Repository
+@using Blog.Common
+@using System.Linq;
+@using Blog.Entity
+@using GridMvc.Html
+@using Blog.Entity.Model
+@using System.IO
+
+@model Category
+
+
+
+@{
+    ViewBag.Title = "Category List";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Categories List</title>
+    <link href="~/Content/startbootstrap-sb-admin-gh-pages/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Gridmvc.css" rel="stylesheet" />
+    <link href="~/Content/gridmvc.datepicker.min.css" rel="stylesheet" />
+
+    <script src="~/Content/startbootstrap-sb-admin-gh-pages/js/jquery.js"></script>
+    <script src="~/Content/startbootstrap-sb-admin-gh-pages/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/gridmvc.min.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+
+</head>
+<body>
+
+    <h3>Categories List</h3>
+    @{
+        var database = Tools.GetConnection();
+
+
+        CategoryRepository categoryRepository = new CategoryRepository();
+        PostRepository postRepository = new PostRepository();
+
+        //var OrderList = ord.List();
+        //var OrderDetailsList = orde.List();
+
+        var completeList = from category in database.Categories
+                               //join post in database.Posts on user.UserID equals post.UserId
+                               //where user.Username == username
+                           select new { category.CategoryID, category.CategoryName, category.CategoryDescription, category.CategoryPhoto };
+
+
+
+    }
+
+    @Html.Grid(completeList.OrderBy(x => x.CategoryID)).Named("CategoriesList").Columns(col =>
+//@Html.Grid(ord.List().ProcessResult.Where(x => x.Member.FirstName == HttpContext.Current.User.Identity.Name)).Columns(col =>
+
+{
+
+   col.Add(x => x.CategoryID).Titled("Category ID");
+   col.Add(x => x.CategoryName).Titled("Category Name").Filterable(true).Sortable(true);
+   col.Add(x => x.CategoryDescription).Titled("Category Description").Filterable(true).Sortable(true);
+   col.Add().Encoded(false).Sanitized(false).Titled("Image").Filterable(false).RenderValueAs(c => @<div style="width:100px;"><img  alt="Image" src='~/Upload/@c.CategoryPhoto' style="width:100px;height:100px;" )" /></div>);
+
+    //col.Add(x => x.Title).Titled("Post Title");
+    //col.Add(x => x.PostContent);
+    //col.Add(x => x.Photo);
+    //col.Add(x => x.IsPay);
+    //col.Add(x => x.Price).Format("{0:c}").Sortable(true);
+    //col.Add(x => x.TotalPrice).Format("{0:c}").Titled("Total Order Price").Sortable(true);
+    //col.Add(x => x.IsPay).Titled("Payment Complete?").Filterable(true);
+
+    //col.Add(x => x.IsPay).RenderValueAs(x => (x.IsPay) ? "Yes" : "No").Titled("Payment Complete?").Filterable(true);
+
+
+    //col.Add(x => x.Member.FirstName);
+    //col.Add(x => x.Member.LastName);
+    //col.Add(x => x.Member.Address);
+
+
+}).WithPaging(10)
+
+
+
+
+    </>
+
+</body>
+</html>

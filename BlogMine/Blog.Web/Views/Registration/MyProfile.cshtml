@@ -1,0 +1,208 @@
+﻿@using Blog.Repository
+@using Blog.Common
+@using System.Linq;
+@using Blog.Entity
+@using GridMvc.Html
+@using Blog.Entity.Model
+@using System.IO
+
+@model User
+
+
+
+@{
+    ViewBag.Title = "MyProfile";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="~/Content/startbootstrap-sb-admin-gh-pages/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Gridmvc.css" rel="stylesheet" />
+    <link href="~/Content/gridmvc.datepicker.min.css" rel="stylesheet" />
+
+    <script src="~/Content/startbootstrap-sb-admin-gh-pages/js/jquery.js"></script>
+    <script src="~/Content/startbootstrap-sb-admin-gh-pages/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/gridmvc.min.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+
+</head>
+<body>
+    <h3>User Info</h3>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+
+        <a href='/Registration/Edit/@Model.UserID' class='btn btn-warning'><span class='glyphicon glyphicon-edit'></span>Edit</a>
+
+
+        <table class="table table-hover table-striped">
+
+
+            @Html.HiddenFor(model => model.UserID)
+            @Html.HiddenFor(model => model.Username)
+
+
+
+
+
+
+            @*has one so passing a new one causes an exception*@
+
+            <tr class="active">
+                <th>@Html.LabelFor(model => model.Username)</th>
+                <td>@Html.DisplayFor(model => model.Username)</td>
+                <td>@Html.ValidationMessageFor(model => model.Username)</td>
+
+
+            </tr>
+
+            <tr class="active">
+                <th>@Html.LabelFor(model => model.Email)</th>
+                <td>@Html.DisplayFor(model => model.Email)</td>
+                <td> @Html.ValidationMessageFor(model => model.Email)</td>
+
+            </tr>
+            <tr class="active">
+
+                <td class="editor-label">
+                    @Html.LabelFor(model => model.Password)
+                </td>
+                <td class="editor-field">
+
+                    @Html.DisplayText(" passwordPlaceHolder ")
+                    @Html.ValidationMessageFor(model => model.Password)
+                </td>
+
+            </tr>
+            <tr class="active">
+                <td class="active">
+                    @Html.LabelFor(model => model.Fullname)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Fullname)
+                    @Html.ValidationMessageFor(model => model.Fullname)
+                </td>
+
+            </tr>
+
+            <tr class="active">
+                <td class="active">
+                    @Html.LabelFor(model => model.Photo)
+                </td>
+                <td>
+                    @if (Model.Photo != null)
+                    {
+                    <img src="~/Upload/@Model.Photo" class="img-circle" style="width:75px" height="75" />
+
+
+                    }
+
+                    @Html.ValidationMessageFor(model => model.Photo)
+                </td>
+
+            </tr>
+
+
+
+        </table>
+
+
+
+
+}
+
+
+    <br />
+    <br />
+    <br />
+
+    <div>
+
+        <h1>User's Posts</h1>
+        @{
+            var database = Tools.GetConnection();
+
+            var username = Session["username"].ToString();
+
+
+
+            UserRepository ord = new UserRepository();
+            PostRepository orde = new PostRepository();
+
+            //var OrderList = ord.List();
+            //var OrderDetailsList = orde.List();
+
+            var completeList = from user in database.Users
+                               join post in database.Posts on user.UserID equals post.UserId
+                               where user.Username == username
+                               select new { post.PostID, user.Username, post.Title, post.PostExcerpt, post.Photo, post.PostDate };
+
+
+
+        }
+
+        @Html.Grid(completeList.OrderBy(x => x.PostDate)).Named("PostsTable").Columns(col =>
+   //@Html.Grid(ord.List().ProcessResult.Where(x => x.Member.FirstName == HttpContext.Current.User.Identity.Name)).Columns(col =>
+
+   // <span class="glyphicon glyphicon-edit"></span>
+   //<span class="glyphicon glyphicon-remove"></span>
+
+   {
+
+   col.Add(x => x.Username).Titled("User Name");
+   col.Add(x => x.PostDate).Format("{0:dd.MM.yyyy}").Titled("Post Date").Filterable(true).Sortable(true);
+   col.Add(x => x.Title).Titled("Post Title");
+   col.Add(x => x.PostExcerpt);
+   col.Add().Encoded(false).Sanitized(false).Titled("Image").Filterable(false).RenderValueAs(x => @<div style="width:100px;"><img alt="Image" src='~/Upload/@x.Photo' style="width:100px;height:100px;" )" /></div>);
+
+                 col.Add().Encoded(false).Sanitized(false).RenderValueAs(delete =>
+
+                 {
+                     string htmlCode = "<a href='/PublicPost/Delete/" + delete.PostID.ToString() + "' class='btn btn-danger'><span class='glyphicon glyphicon-remove'></span>Delete</a>";
+
+                     return MvcHtmlString.Create(htmlCode);
+
+
+                 }).SetWidth(30);
+
+                 col.Add().Encoded(false).Sanitized(false).RenderValueAs(edit =>
+
+                 {
+                     string htmlCode = "<a href='/PublicPost/EditPost/" + edit.PostID.ToString() + "' class='btn btn-warning'><span class='glyphicon glyphicon-edit'></span>Edit</a>";
+
+                     return MvcHtmlString.Create(htmlCode);
+
+
+                 }).SetWidth(30);
+
+
+        //col.Add(x => x.IsPay);
+        //col.Add(x => x.Price).Format("{0:c}").Sortable(true);
+        //col.Add(x => x.TotalPrice).Format("{0:c}").Titled("Total Order Price").Sortable(true);
+        //col.Add(x => x.IsPay).Titled("Payment Complete?").Filterable(true);
+
+        //col.Add(x => x.IsPay).RenderValueAs(x => (x.IsPay) ? "Yes" : "No").Titled("Payment Complete?").Filterable(true);
+
+
+        //col.Add(x => x.Member.FirstName);
+        //col.Add(x => x.Member.LastName);
+        //col.Add(x => x.Member.Address);
+
+
+    }).WithPaging(5)
+
+
+
+
+    </div>
+
+</body>
+</html>

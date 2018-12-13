@@ -1,0 +1,39 @@
+﻿
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create New</title>
+    <link href="~/Content/startbootstrap-sb-admin-gh-pages/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container form-group">
+        <div class="row">
+            <h2>Add New User</h2>
+        </div>
+        <div class="col-lg-6 col-sm-12">
+            <form role="form" action="~/Registration/Add" method="post">
+
+                <input name="Username" class="form-control" placeholder="Enter usermame" />
+                <input name="Email" class="form-control" placeholder="Enter email" />
+                <input name="Password" class="form-control" placeholder="Enter password" />
+                <input name="Fullname" class="form-control" placeholder="Enter fullname" />
+                @*<input name="Photo" class="form-control" placeholder="Enter Address" />
+                <input name="UserRoleId" class="form-control" placeholder="Enter Address" />*@
+
+
+
+                <div class="text-right">
+                    <button type="submit" class="btn btn-info">Add User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

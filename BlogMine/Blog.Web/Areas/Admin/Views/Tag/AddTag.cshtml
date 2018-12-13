@@ -1,0 +1,48 @@
+﻿@using Blog.Entity.Model
+@model Tag
+
+@{
+    ViewBag.Title = "AddTag";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+@Html.ActionLink("Back To Tag List", "List")
+
+
+<h2>Add Tag</h2>
+
+
+@using (Html.BeginForm())
+
+{
+
+    <div>
+        <label>@ViewBag.Message</label>
+
+    </div>
+
+    <table class="table table-hover">
+
+        <tr>
+
+            <td>@Html.DisplayNameFor(x => x.TagName)</td>
+            <td>@Html.EditorFor(x => x.TagName)</td>
+        </tr>
+
+
+
+        <tr>
+
+            <td colspan="2">
+
+                <input type="submit" value="Save" />
+
+            </td>
+
+        </tr>
+
+
+
+
+    </table>
+}

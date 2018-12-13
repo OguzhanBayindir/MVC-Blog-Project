@@ -1,0 +1,76 @@
+﻿
+@using Blog.Repository
+@using Blog.Entity.Model
+
+
+@{Layout = null;}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.9.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+
+
+<div class="col-lg-8">
+    <div class="blog_left_sidebar">
+
+
+        @{
+            PostRepository postRepository = new PostRepository();
+
+            foreach (Post item in Model)
+            {
+
+                <article class="blog_style1">
+
+                    <a class="cat" href="~/PublicCategory/List">@item.Category.CategoryName</a>
+
+                    <div class="blog_img">
+
+                        <img class="img-fluid" src="~/Upload/@item.Photo" alt="" style="width:250px;height:250px">
+                    </div>
+                    <div class="blog_text">
+                        <div class="blog_text_inner">
+                            <h4 style="font-size:14px"><strong>@item.Title </strong> by <a href="~/Registration/UserInfo/@item.UserId">@item.User.Username</a></h4>
+                            @if (item.User.Username == Session["username"].ToString())
+                            {
+                                <button class="btn btn-warning" type="button" onclick="location.href='@Url.Action("EditPost","PublicPost",new { id = item.PostID})'">Edit</button>
+                                <button class="btn btn-danger" type="button" onclick="location.href='@Url.Action("Delete","PublicPost", new { id = item.PostID })'">Delete</button>
+
+                            }
+
+
+                            <p>@Html.Raw(@item.PostExcerpt)</p>
+                            <div class="date" style="height:30px; font-size:14px;">
+                                <p style="font-size:14px;"><i class="fa fa-calendar" aria-hidden="true"></i> @item.PostDate</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <a class="btn btn-primary" href="/PublicPost/SinglePost/@item.PostID">Read The Rest of The Post<span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <hr>
+
+
+
+                </article>
+            }
+
+        }
+
+
+        <div class="row">
+
+            <div class="col-md-8 text-center">
+
+            </div>
+        </div>
+
+
+
+
+        <hr>
+
+    </div>
+</div>

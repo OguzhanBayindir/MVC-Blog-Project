@@ -1,0 +1,80 @@
+﻿@using Blog.Web.Models.ViewModels
+@using Blog.Entity.Model
+@model PostViewModel
+
+
+@{
+    ViewBag.Title = "EditPost";
+    Layout = null;
+}
+
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+
+<h2>AddPost</h2>
+
+
+@using (Html.BeginForm("EditPost", "PublicPost", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+
+        @Html.HiddenFor(model => model.Post.PostID)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Post.Title)
+
+        </div>
+
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Post.Title)
+            @Html.ValidationMessageFor(model => model.Post.Title)
+        </div>
+
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Post.PostContent)
+
+        </div>
+
+        <div class="editor-field">
+            @Html.TextAreaFor(x => x.Post.PostContent, new { @id = "postContentEditor", @class = "form-control", @rows = "20" })
+            @Html.ValidationMessageFor(model => model.Post.PostContent)
+        </div>
+        s
+        <div>@Html.DisplayNameFor(model => model.Post.Photo)</div>
+
+        <div>
+
+            <input type="file" name="photo" id="photo" />
+
+        </div>
+
+        <div>
+            @Html.DisplayNameFor(model => model.Post.Category.CategoryName)
+        </div>
+        <div>
+
+            @Html.DropDownListFor(model => model.Post.CategoryId, Model.CategoryList)
+        </div>
+
+        <script>
+
+            CKEDITOR.replace('postContentEditor');
+
+        </script>
+
+
+
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+
+
+    </fieldset>
+
+
+}

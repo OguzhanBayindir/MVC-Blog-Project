@@ -1,0 +1,57 @@
+﻿@using Blog.Entity.Model
+@model IEnumerable<Post>
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h2>List</h2>
+
+<p>@Html.ActionLink("Create New", "AddPost")</p>
+
+
+<div><p>List of Posts</p></div>
+
+@using (Html.BeginForm())
+
+{
+
+<table class="table">
+
+    <tr>
+
+        <th>@Html.DisplayNameFor(model => model.Title)</th>
+        <th>@Html.DisplayNameFor(model => model.PostContent)</th>
+        <th>@Html.DisplayNameFor(model => model.Photo)</th>
+        <th>@Html.DisplayNameFor(model => model.PostDate)</th>
+
+        <th>@Html.DisplayNameFor(model => model.Category.CategoryName)</th>
+        <th>@Html.DisplayNameFor(model => model.User.Username)</th>
+        <th>@Html.DisplayNameFor(model => model.IsRead)</th>
+        <th>@Html.DisplayNameFor(model => model.PostExcerpt)</th>
+
+        <th>Action</th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(t => item.Title)</td>
+            <td>@Html.DisplayFor(t => item.PostContent)</td>
+            <td><img src="~/Upload/@item.Photo" class="img-circle" style="width:75px" height="75" /></td>
+            <td>@Html.DisplayFor(t => item.PostDate)</td>
+            <td>@Html.DisplayFor(t => item.Category.CategoryName)</td>
+            <td>@Html.DisplayFor(t => item.User.Username)</td>
+            <td>@Html.DisplayFor(t => item.IsRead)</td>
+            <td>@Html.DisplayFor(t => item.PostExcerpt)</td>
+
+
+            <td>@Html.ActionLink("Edit", "Edit", new { id = item.PostID })</td>
+            <td>@Html.ActionLink("Delete", "Delete", new { id = item.PostID })</td>
+
+        </tr>
+    }
+</table>
+
+}

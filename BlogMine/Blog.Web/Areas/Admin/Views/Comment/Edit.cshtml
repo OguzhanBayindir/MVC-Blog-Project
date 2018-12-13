@@ -1,0 +1,62 @@
+﻿@using Blog.Web.Areas.Admin.Models.ViewModel
+@using Blog.Entity.Model
+@model CommentViewModel
+
+
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "Comment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div>
+        @ViewBag.Message
+    </div>
+    <fieldset>
+
+        @Html.HiddenFor(model => model.Comment.CommentID)
+      
+
+
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Comment.CommentContent)
+        </div>
+
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Comment.CommentContent)
+            @Html.ValidationMessageFor(model => model.Comment.CommentContent)
+        </div>
+
+    
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Comment.Post.PostID, Model.PostsList)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Comment.PostId, Model.PostsList)
+            @Html.ValidationMessageFor(model => model.Comment.PostId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Comment.UserId, Model.UsersList)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Comment.UserId, Model.UsersList)
+            @Html.ValidationMessageFor(model => model.Comment.UserId)
+        </div>
+
+
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+
+    </fieldset>
+}

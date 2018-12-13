@@ -1,0 +1,255 @@
+﻿@using Blog.Entity.Model
+@using Blog.Repository
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="~/Content/fantom/fantom/img/favicon.png" type="image/png">
+    <title>Fantom Blog</title>
+    <!-- Bootstrap CSS -->
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/fantom/fantom/vendors/linericon/style.css" rel="stylesheet" />
+    <link href="~/Content/fantom/fantom/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/fantom/fantom/vendors/owl-carousel/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/Content/fantom/fantom/vendors/lightbox/simpleLightbox.css" rel="stylesheet" />
+    <link href="~/Content/fantom/fantom/vendors/nice-select/css/nice-select.css" rel="stylesheet" />
+    <link href="~/Content/fantom/fantom/vendors/animate-css/animate.css" rel="stylesheet" />
+    <link href="~/Content/fantom/fantom/vendors/jquery-ui/jquery-ui.css" rel="stylesheet" />
+    <!-- main css -->
+    <link href="~/Content/fantom/fantom/css/style.css" rel="stylesheet" />
+    <link href="~/Content/fantom/fantom/css/responsive.css" rel="stylesheet" />
+</head>
+<body>
+
+    <!--================Header Menu Area =================-->
+    <header class="header_area">
+      
+        <div class="main_menu">
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color:aqua; top:0px; height:200px;">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <a class="navbar-brand logo_h" href="~/Home/Index"><img src="" alt=""></a>
+                  
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse offset" id="navbarSupportedContent" style="margin-top:50px;">
+                        <ul class="nav navbar-nav menu_nav">
+                            <li class="nav-item active"><a class="nav-link" href="~/Home/Index">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="~/PublicCategory/List">Categories</a></li>
+                            <li class="nav-item"><a class="nav-link" href="~/PublicPost/Archive">Archive</a></li>
+
+                            <li class="nav-item"><a class="nav-link" href="~/Home/Contact">Contact</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right ml-auto">
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!--================Header Menu Area =================-->
+    <!--================Home Banner Area =================-->
+    <!--================End Home Banner Area =================-->
+    <!--================Blog Area =================-->
+    <section class="blog_area p_120 single-post-area">
+        <div class="container">
+            <div class="row">
+                <div class="middle-space">
+
+                    @RenderBody()
+
+
+                </div>
+
+                <div class="col-edit" style="position:absolute;left:1000px;width:800px">
+                    <div class="blog_right_sidebar" style="width:600px">
+
+                        <aside class="single_sidebar_widget search_widget">
+                            <form method="get" action="@Url.Action("SearchPosts","Home")">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search Posts" name="search" id="search">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="submit"><i class="lnr lnr-magnifier"></i></button>
+                                    </span>
+                                </div><!-- /input-group -->
+                                <div class="br"></div>
+
+                                </form>
+                        </aside>
+
+                        @*<aside class="single_sidebar_widget search_widget">
+                            <div class="input-group" style="display:inline-block">
+                                <form method="get" action="@Url.Action("SearchPosts","Home")">
+                                    <input type="text" class="form-control" placeholder="Search Posts" name="search" id="search">
+                                    <span class="input-group-btn" style="display:inline-block">
+                                        <button class="btn btn-default" type="submit" style="display:inline-block"><i class="lnr lnr-magnifier"></i></button>
+                                    </span>
+                                </form>
+
+                            </div> /input-group 
+                            <div class="br"></div>
+                        </aside>*@
+                        <aside class="single_sidebar_widget author_widget" style="margin-bottom:100px">
+                            <div style="position:absolute; left:300px;">
+
+                                <img class="author_img rounded-circle" src="~/Upload/4ea2a39334464f719036b09ec39717b8.jpg" alt="">
+                                <h4>Ugur Salin</h4>
+                                <p>Software Developer</p>
+                                <div class="social_icon">
+                                    <a href="https://www.twitter.com/iwaxxxx"><i class="fa fa-twitter"></i></a>
+                                    <a href="https://github.com/usalin"><i class="fa fa-github"></i></a>
+                                    <a href="https://www.linkedin.com/in/ugursalin/"><i class="fa fa-linkedin"></i></a>
+                                </div>
+                                <p>Tech at its best.</p>
+                                <div class="br"></div>
+                            </div>
+                        </aside>
+                        <aside class="single_sidebar_widget popular_post_widget" style="margin-top:350px">
+                            @{Html.RenderAction("PopularPosts", "Home");}
+                        </aside>
+                        <aside class="single_sidebar_widget">
+                            <a href="~/PublicCategory/List"><img class="img-fluid" src="img/blog/add.jpg" alt=""></a>
+                            <div class="br"></div>
+                        </aside>
+                        <aside class="single_sidebar_widget post_category_widget" style="display:block; width:100%;position:relative;left:40px;">
+                            <h4 class="widget_title">Post Categories</h4>
+                            <ul class="list cat-list">
+
+                                @{
+                                    CategoryRepository categoryRepository = new CategoryRepository();
+
+                                    foreach (Category item in categoryRepository.List().ProcessResult)
+
+                                    {
+
+
+                                <li>
+                                    <a href="~/PublicCategory/List/" class="d-flex justify-content-between">
+                                        <p>@item.CategoryName</p>
+
+                                    </a>
+                                </li>
+
+                                    }
+
+
+                                }
+                                @*<a href="" class="d-flex justify-content-between">
+                    <p>Technology</p>
+                    <p>37</p>
+                </a>*@
+
+                            </ul>
+                            <div class="br"></div>
+                        </aside>
+                        <aside class="single-sidebar-widget tag_cloud_widget" style="width:100%;position:relative;left:80px;">
+                            <h4 class="widget_title">Tag Clouds</h4>
+                            <ul class="list">
+                                @{
+                                    TagRepository tagRepository = new TagRepository();
+
+                                    foreach (Tag item in tagRepository.List().ProcessResult)
+
+                                    {
+                                        <li><a>@item.TagName</a></li>
+
+                                    }
+
+
+
+                                }
+
+                            </ul>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================Blog Area =================-->
+    <!--================ start footer Area  =================-->
+    <div class="color-changer" style="background-color:black; position:absolute; top:3500px; bottom:0px; width:100%">
+        <footer class="footer-area" style="background-color:black">
+            <div class="container" style="background-color:black">
+                <div class="row">
+                    <div class="col-lg-3  col-md-6 col-sm-6">
+                        <div class="single-footer-widget" style="color:white">
+                            <h6 class="footer_title">About Us</h6>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore dolore magna aliqua.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="single-footer-widget" style="color:white">
+                            <h6 class="footer_title">Newsletter</h6>
+                            <p>Stay updated with our latest trends</p>
+                            <div id="mc_embed_signup">
+                                <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01" method="get" class="subscribe_form relative">
+                                    <div class="input-group d-flex flex-row">
+                                        <input name="EMAIL" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address '" required="" type="email">
+                                        <button class="btn sub-btn"><span class="lnr lnr-arrow-right"></span></button>
+                                    </div>
+                                    <div class="mt-10 info"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="single-footer-widget instafeed" style="color:white">
+                            <h6 class="footer_title">Instagram Feed</h6>
+                            <ul class="list instafeed d-flex flex-wrap">
+                                <li><img src="img/instagram/Image-01.jpg" alt=""></li>
+                                <li><img src="img/instagram/Image-02.jpg" alt=""></li>
+                                <li><img src="img/instagram/Image-03.jpg" alt=""></li>
+                                <li><img src="img/instagram/Image-04.jpg" alt=""></li>
+                                <li><img src="img/instagram/Image-05.jpg" alt=""></li>
+                                <li><img src="img/instagram/Image-06.jpg" alt=""></li>
+                                <li><img src="img/instagram/Image-07.jpg" alt=""></li>
+                                <li><img src="img/instagram/Image-08.jpg" alt=""></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-sm-6" style="">
+                        <div class="single-footer-widget f_social_wd" style="color:white">
+                            <h6 class="footer_title">Follow Us</h6>
+                            <p>Let us be social</p>
+                            <div class="f_social">
+                                <a href=""><i class="fa fa-facebook"></i></a>
+                                <a href=""><i class="fa fa-twitter"></i></a>
+                                <a href=""><i class="fa fa-dribbble"></i></a>
+                                <a href=""><i class="fa fa-behance"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row footer-bottom d-flex justify-content-between align-items-center">
+                    <p class="col-lg-12 footer-text text-center">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;
+                        <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!--================ End footer Area  =================-->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/stellar.js"></script>
+    <script src="vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+    <script src="vendors/isotope/isotope-min.js"></script>
+    <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="vendors/jquery-ui/jquery-ui.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/mail-script.js"></script>
+    <script src="js/theme.js"></script>
+</body>
+</html>

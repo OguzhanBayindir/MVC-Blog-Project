@@ -1,0 +1,61 @@
+﻿@using Blog.Entity.Model
+@model IEnumerable<Category>
+
+
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h2>Categories List</h2>
+
+<hr />
+
+<div>
+
+    <p>@ViewBag.Message</p>
+
+</div>
+
+<table class="table table-hover">
+
+
+
+    <tr class="active">
+
+        <td><strong>@Html.DisplayNameFor(t => t.CategoryID)</strong></td>
+        <td><strong>@Html.DisplayNameFor(t => t.CategoryName)</strong></td>
+        <td><strong>@Html.DisplayNameFor(t => t.CategoryDescription)</strong></td>
+        <td><strong>@Html.DisplayNameFor(t => t.CategoryPhoto)</strong></td>
+
+
+        <td>Action</td>
+
+    </tr>
+
+    @foreach (Category item in Model)
+    {
+    <tr>
+
+        <td>@item.CategoryID</td>
+        <td>@item.CategoryName</td>
+        <td>@item.CategoryDescription</td>
+        <td><img src="~/Upload/@item.CategoryPhoto" class="img-circle" style="width:75px" height="75" /></td>
+
+
+        <td>
+            <a href="~/Admin/Category/Edit/@item.CategoryID">Edit</a>
+            @Html.ActionLink("Delete", "Delete", new { @id = item.CategoryID })
+
+        </td>
+
+
+    </tr>
+
+    }
+
+
+
+
+
+</table> 

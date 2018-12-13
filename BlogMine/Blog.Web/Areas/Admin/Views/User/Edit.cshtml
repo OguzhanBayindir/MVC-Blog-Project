@@ -1,0 +1,88 @@
+﻿@using Blog.Web.Areas.Admin.Models.ViewModel
+@using Blog.Entity.Model
+@model  UserUserRoleViewModel
+
+
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h2>Edit</h2>
+@using (Html.BeginForm("Edit", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+<fieldset>
+
+    @Html.HiddenFor(model => model.User.UserID)
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.User.Username)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.User.Username)
+        @Html.ValidationMessageFor(model => model.User.Username)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.User.Email)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.User.Email)
+        @Html.ValidationMessageFor(model => model.User.Email)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.User.Password)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.User.Password)
+        @Html.ValidationMessageFor(model => model.User.Password)
+    </div>
+
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.User.Fullname)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.User.Fullname)
+        @Html.ValidationMessageFor(model => model.User.Fullname)
+    </div>
+
+
+
+    <div>@Html.DisplayNameFor(model => model.User.Photo)</div>
+
+    <div>
+
+        <input type="file" name="photo" id="photo" />
+
+    </div>
+
+    <div class="editor-field">
+        @Html.DropDownListFor(model => model.User.UserRoleId, Model.UserRolesList)
+        @Html.ValidationMessageFor(model => model.User.UserRoleId)
+    </div>
+
+
+
+
+
+    <p>
+        <input type="submit" value="Save" />
+    </p>
+
+    <hr />
+
+    @if (ViewBag.result != null)
+    {
+        <div class="alert alert-@ViewBag.status" role="alert">@ViewBag.result</div>
+
+    }
+
+
+</fieldset>
+}

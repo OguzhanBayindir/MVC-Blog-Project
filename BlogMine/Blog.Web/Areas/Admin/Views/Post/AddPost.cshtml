@@ -1,0 +1,77 @@
+﻿@using Blog.Web.Areas.Admin.Models.ViewModel
+@using Blog.Entity.Model
+@model PostViewModel
+
+
+@{
+    ViewBag.Title = "AddPost";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h2>Add Post</h2>
+
+@using (Html.BeginForm("AddPost", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+<fieldset>
+
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Post.Title)
+
+    </div>
+
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Post.Title)
+        @Html.ValidationMessageFor(model => model.Post.Title)
+    </div>
+
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Post.PostContent)
+
+    </div>
+
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Post.PostContent)
+        @Html.ValidationMessageFor(model => model.Post.PostContent)
+    </div>
+
+    <div>@Html.DisplayNameFor(model => model.Post.Photo)</div>
+
+    <div>
+
+        <input type="file" name="photo" id="photo" />
+
+    </div>
+
+    <div>
+        @Html.DisplayNameFor(model => model.Post.Category.CategoryName)
+    </div>
+    <div>
+
+        @Html.DropDownListFor(model => model.Post.CategoryId, Model.CategoryList)
+    </div>
+
+    <div>
+        @Html.DisplayNameFor(model => model.Post.User.Username)
+    </div>
+    <div>
+
+        @Html.DropDownListFor(model => model.Post.UserId, Model.UsersList)
+    </div>
+
+
+
+    <p>
+        <input type="submit" value="Create" />
+    </p>
+
+
+</fieldset>
+
+
+}

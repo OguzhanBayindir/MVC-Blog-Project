@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AB762A0D-F176-4433-BC08-FB8570A3509D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Blog.Entity</RootNamespace>
+    <AssemblyName>Blog.Entity</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BlogContext.cs" />
+    <Compile Include="Entity Configuration\CategoryConfiguration.cs" />
+    <Compile Include="Entity Configuration\CommentConfiguration.cs" />
+    <Compile Include="Entity Configuration\PostConfiguration.cs" />
+    <Compile Include="Entity Configuration\TagConfiguration.cs" />
+    <Compile Include="Entity Configuration\UserConfiguration.cs" />
+    <Compile Include="Migrations\201810260106480_DBsetup.cs" />
+    <Compile Include="Migrations\201810260106480_DBsetup.Designer.cs">
+      <DependentUpon>201810260106480_DBsetup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810270807444_MinorChangeToPostsTable.cs" />
+    <Compile Include="Migrations\201810270807444_MinorChangeToPostsTable.Designer.cs">
+      <DependentUpon>201810270807444_MinorChangeToPostsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810270833296_AddedConfigurationClassesForStandaloneTables.cs" />
+    <Compile Include="Migrations\201810270833296_AddedConfigurationClassesForStandaloneTables.Designer.cs">
+      <DependentUpon>201810270833296_AddedConfigurationClassesForStandaloneTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810270851420_MinorChangesToNamingInTables.cs" />
+    <Compile Include="Migrations\201810270851420_MinorChangesToNamingInTables.Designer.cs">
+      <DependentUpon>201810270851420_MinorChangesToNamingInTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810290008308_DBCheck.cs" />
+    <Compile Include="Migrations\201810290008308_DBCheck.Designer.cs">
+      <DependentUpon>201810290008308_DBCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810291003080_ChangedMaxValueOfPostContentInPostTable.cs" />
+    <Compile Include="Migrations\201810291003080_ChangedMaxValueOfPostContentInPostTable.Designer.cs">
+      <DependentUpon>201810291003080_ChangedMaxValueOfPostContentInPostTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810291914284_MinorChangeToCommentsTable.cs" />
+    <Compile Include="Migrations\201810291914284_MinorChangeToCommentsTable.Designer.cs">
+      <DependentUpon>201810291914284_MinorChangeToCommentsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811070912177_MinorChangesToCategoriesTable.cs" />
+    <Compile Include="Migrations\201811070912177_MinorChangesToCategoriesTable.Designer.cs">
+      <DependentUpon>201811070912177_MinorChangesToCategoriesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Model\AllowHtmlAttribute.cs" />
+    <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\Comment.cs" />
+    <Compile Include="Model\Post.cs" />
+    <Compile Include="Model\Tag.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\UserRole.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201810260106480_DBsetup.resx">
+      <DependentUpon>201810260106480_DBsetup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810270807444_MinorChangeToPostsTable.resx">
+      <DependentUpon>201810270807444_MinorChangeToPostsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810270833296_AddedConfigurationClassesForStandaloneTables.resx">
+      <DependentUpon>201810270833296_AddedConfigurationClassesForStandaloneTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810270851420_MinorChangesToNamingInTables.resx">
+      <DependentUpon>201810270851420_MinorChangesToNamingInTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810290008308_DBCheck.resx">
+      <DependentUpon>201810290008308_DBCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810291003080_ChangedMaxValueOfPostContentInPostTable.resx">
+      <DependentUpon>201810291003080_ChangedMaxValueOfPostContentInPostTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810291914284_MinorChangeToCommentsTable.resx">
+      <DependentUpon>201810291914284_MinorChangeToCommentsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811070912177_MinorChangesToCategoriesTable.resx">
+      <DependentUpon>201811070912177_MinorChangesToCategoriesTable.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

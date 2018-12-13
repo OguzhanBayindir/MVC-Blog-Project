@@ -1,0 +1,24 @@
+﻿@using Blog.Entity.Model
+@model IEnumerable<Post>
+
+@{
+    Layout = null;
+}
+
+<h3 class="widget_title" style="height:100px;">Latest Posts</h3>
+
+@foreach (Post item in Model)
+{
+
+    <div class="media post_item" style="position:relative;left:20px; height:120px;">
+        <img src="~/Upload/@item.Photo" style="width:100px; height:100px; display:inline-block" alt="post">
+        <div class="media-body" style="top:0px;height:100px; width:400px; display:inline-block">
+            <a href="" ><h3 style="display:inline-block;width:200px">@item.Title</h3></a>
+            <p style="display:inline-block; width:200px">@item.PostDate</p>
+        </div>
+    </div>
+
+
+}
+
+<div class="br"></div>

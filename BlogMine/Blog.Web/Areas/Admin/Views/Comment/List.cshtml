@@ -1,0 +1,50 @@
+﻿@using Blog.Entity.Model
+@model IEnumerable<Comment>
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h2>List</h2>
+
+<p>@Html.ActionLink("Create New", "AddComment")</p>
+
+
+<div><p>List of Comments</p></div>
+
+@using (Html.BeginForm())
+
+{
+    <table class="table">
+
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.User.Username)</th>
+            <th>@Html.DisplayNameFor(model => model.CommentContent)</th>
+            <th>@Html.DisplayNameFor(model => model.Post.Title)</th>
+            <th>@Html.DisplayNameFor(model => model.CommentDate)</th>
+
+
+
+            <th>Action</th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@Html.DisplayFor(t => item.User.Username)</td>
+            <td>@Html.DisplayFor(t => item.CommentContent)</td>
+            <td>@Html.DisplayFor(t => item.Post.Title)</td>
+            <td>@Html.DisplayFor(t => item.CommentDate)</td>
+
+            <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.CommentID })
+            @Html.ActionLink("Delete", "Delete", new { id = item.CommentID })
+        </td>
+
+        </tr>
+        }
+    </table>
+
+}

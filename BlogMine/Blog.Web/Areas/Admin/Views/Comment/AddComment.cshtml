@@ -1,0 +1,61 @@
+﻿@using Blog.Web.Areas.Admin.Models.ViewModel
+@using Blog.Entity.Model
+@model CommentViewModel
+
+
+@{
+    ViewBag.Title = "AddComment";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h2>AddComment</h2>
+
+
+@using (Html.BeginForm("AddComment", "Comment", FormMethod.Post))
+
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+<fieldset>
+
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Comment.CommentContent)
+
+    </div>
+
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Comment.CommentContent)
+        @Html.ValidationMessageFor(model => model.Comment.CommentContent)
+    </div>
+
+    <div>
+        @Html.DisplayNameFor(model => model.Comment.Post.Title)
+    </div>
+    <div>
+
+        @Html.DropDownListFor(model => model.Comment.PostId, Model.PostsList)
+    </div>
+
+    <div>
+        @Html.DisplayNameFor(model => model.Comment.User.Username)
+    </div>
+    <div>
+
+        @Html.DropDownListFor(model => model.Comment.UserId, Model.UsersList)
+    </div>
+
+
+
+
+
+    <p>
+        <input type="submit" value="Create" />
+    </p>
+
+
+</fieldset>
+
+
+}

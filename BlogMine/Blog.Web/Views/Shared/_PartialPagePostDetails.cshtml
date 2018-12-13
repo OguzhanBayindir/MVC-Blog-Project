@@ -1,0 +1,346 @@
+﻿@using Blog.Entity.Model
+@using Blog.Repository
+@using Blog.Web.Models
+@model PostCommentViewModel
+@using Microsoft.Web.Helpers
+
+
+
+
+<div class="col-lg-8">
+    <div class="main_blog_details">
+
+        @{
+            Post selectedPost2 = Model.Post;
+
+
+            <img class="img-fluid" src="~/Upload/@selectedPost2.Photo" style="width:200px;height:200px;" alt="">
+            <a href="#"><h4>@selectedPost2.Title</h4></a>
+            <div class="user_details">
+                <div class="float-left">
+
+
+
+                    <a href="#">@selectedPost2.Category.CategoryName</a>
+
+
+
+                </div>
+                <div class="float-left">
+                    <div style="display:inline-block" class="media">
+                        <div class="d-flex" style="display:inline-block">
+                            <img src="/Upload/@selectedPost2.User.Photo" style="width:80px;height:80px; display:inline-block" alt="">
+                        </div>
+                        <div class="media-body" style="display:inline-block; height:90px;width:180px;">
+                            <h5 style="display:inline-block">@selectedPost2.User.Username</h5>
+                            <p style="display:inline-block">@selectedPost2.PostDate</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <p>@Html.Raw(@selectedPost2.PostContent)</p>
+            <div class="news_d_footer">
+                <a href="#"><i class="lnr lnr lnr-heart"></i></a>
+
+                @if (selectedPost2.Comments != null)
+                {
+                    <a class="justify-content-center ml-auto" href="#"><i class="lnr lnr lnr-bubble"></i>@selectedPost2.Comments.Count Comment(s)</a>
+                }
+
+
+
+      
+            </div>
+        }
+    </div>
+    @*<div class="navigation-area">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                    <div class="thumb">
+                        <a href="#"><img class="img-fluid" src="img/blog/prev.jpg" alt=""></a>
+                    </div>
+                    <div class="arrow">
+                        <a href="#"><span class="lnr text-white lnr-arrow-left"></span></a>
+                    </div>
+                    <div class="detials">
+                        <p>Prev Post</p>
+                        <a href="#"><h4>Space The Final Frontier</h4></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                    <div class="detials">
+                        <p>Next Post</p>
+                        <a href="#"><h4>Telescopes 101</h4></a>
+                    </div>
+                    <div class="arrow">
+                        <a href="#"><span class="lnr text-white lnr-arrow-right"></span></a>
+                    </div>
+                    <div class="thumb">
+                        <a href="#"><img class="img-fluid" src="img/blog/next.jpg" alt=""></a>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+    <div class="comments-area">
+
+
+        @{
+            Post selectedPost = Model.Post;
+
+            CommentRepository commentRepository = new CommentRepository();
+            foreach (Comment item in commentRepository.List().ProcessResult.Where(x => x.PostId == selectedPost.PostID))
+            {
+
+                <div class="well">
+                    <div class="single-comment justify-content-between d-flex">
+                        <a class="pull-left" href="#">
+                            @{ var userID = Convert.ToInt32(Session["userID"]);}
+
+                            <img src="~/Upload/@item.User.Photo" class="img-circle" style="width:50px;height:50px;" alt="">
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                @item.User.Username
+                                <small>@item.CommentDate</small>
+                            </h4>
+
+
+
+                            @{ var username = @item.User.Username;}
+
+
+
+                            <p class="lead" style="display:inline-block">
+
+                    
+
+
+                                @*<div id="container" style="display:inline-block">
+            <a class="twitter-mention-button" style="display:inline-block"
+               href="https://twitter.com/intent/tweet?screen_name= ">
+                @username
+            </a>
+        </div>*@
+
+
+
+                                <a class="twitter-share-button"
+                                   href="https://www.google.co.uk/webhp"
+                                   data-size="large"
+                                   data-text="@item.CommentContent"
+                                   data-url="https://dev.twitter.com/web/tweet-button"
+                                   data-via="@username"
+                                   data-related="twitterapi,twitter">
+                                    Tweet
+                                </a>
+
+
+
+                                <a class="twitter-follow-button"
+                                   href="https://twitter.com/iwaxxxx"
+                                   data-size="large">
+                                    Follow !
+                                </a>
+
+                                <div id="well">
+                                    @item.CommentContent
+
+                                </div>
+
+                                @*<script>
+            twttr.widgets.createShareButton(
+            '/',
+            document.getElementById('container'),
+            {
+            text: '@item.CommentContent'
+            }
+            );
+
+        </script>*@
+
+
+                                @*<script>*@
+
+                                @*twttr.widgets.createMentionButton(
+            "@username",
+            document.getElementById("twitter-mention-button"),
+            {
+                size: "large"
+            }
+        );
+        </script>*@
+
+                            </p>
+
+                            @if (userID == item.UserId)
+                            {
+                                <a class="btn btn-danger" href="~/PublicComment/Delete/@item.CommentID">
+                                    Delete
+                                </a>
+
+                            }
+
+
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+            @*<div*@ @*class="well">
+                <a class="pull-left" href="#">
+                    <img width="50" class="img-circle" src="@item.Uye.Foto" alt="@item.Uye.AdSoyad">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        @item.Uye.KullaniciAdi
+                        <small>@item.Tarih</small>
+                    </h4>
+                    @item.Icerik - @if (Convert.ToInt32(Session["uyeid"]) == item.UyeId)
+                    {
+                        <a class="btn btn-danger" href="/Home/YorumSil/@item.YorumId">Sil</a>
+                    }
+                </div>
+            </div>*@
+
+
+
+        }
+
+
+
+        
+
+
+        @*@{ using (Html.BeginForm("Create", "PublicComment", FormMethod.Post))
+            {
+                <div class="well">
+                    <h4>Comment</h4>
+                    <form role="form">
+                        <div class="form-group">
+                            <textarea id="comment" typeof="text" class="form-control" rows="3"></textarea>
+                            <textarea
+                        </div>
+                        <button type="submit" id="send" class="btn btn-primary">Comment</button>
+                    </form>
+                </div>
+            }
+        }*@
+
+
+
+        
+
+
+
+        @using (Html.BeginForm("Create", "PublicComment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.ValidationSummary(true)
+
+
+            @Html.HiddenFor(model => model.Post.PostID)
+            @Html.HiddenFor(model => model.Comment.UserId)
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Comment.CommentContent)
+            </div>
+            <div class="editor-field">
+                @Html.TextAreaFor(model => model.Comment.CommentContent, 5, 50, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Comment.CommentContent)
+            </div>
+
+            <button type="submit" id="send" class="btn btn-primary">Post Comment!</button>
+
+            @*<div class="well">
+                <h4>Yorum</h4>
+                <form role = "form" >
+                    < div class="form-group">
+                        <textarea id = "yorum" typeof="text" class="form-control" rows="3"></textarea>
+                    </div>
+                    <button type = "submit" id="gonder" class="btn btn-primary">Yorum Yap</button>
+                </form>
+            </div>*@
+
+
+
+
+        }
+
+
+
+
+
+        @*<div class="comment-form">
+        <h4>Leave a Reply</h4>
+        <form role="form" action="~/PublicComment/Create" method="post">
+            <div class="form-group form-inline">
+                <div class="form-group col-lg-6 col-md-6 name">
+                    <input type="text" class="form-control" id="fullname" placeholder="Enter Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your Full Name'">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 email">
+                    <input type="email" class="form-control" id="email" placeholder="Enter email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your email address'">
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="subject" placeholder="Subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Subject'">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control mb-10" rows="5" name="content" placeholder="Content" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Content'" required=""></textarea>
+            </div>
+            <button type="submit" class="btn btn-dark"></button>
+        </form>*@
+    </div>
+
+
+</div>
+
+
+<script>
+    window.twttr = (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+            t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function (f) {
+            t._e.push(f);
+        };
+
+        return t;
+    }(document, "script", "twitter-wjs"));</script>
+
+
+
+
+
+
+
+                                @*<script src="~/Scripts/jquery-1.9.1.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+
+        <script type="text/javascript">
+
+            $(document).ready(function(){
+                $("#send").click(function () {
+                    var usercomment = $("#comment").val();
+                    $.ajax({
+                        url: '/PublicComment/Create/',
+                        data: {comment:usercomment, postId:@Model.Post.PostID},
+                        type: 'POST',
+                        dataType: 'json',
+                        success: function (data) {
+                            alert("Başarılı "+ yorumunuz);}
+                        });
+                });
+            })
+
+
+        </script>*@

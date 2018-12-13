@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Blog.Entity.Model.Tag>
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h2>List</h2>
+
+<p>@Html.ActionLink("Create New", "AddTag")</p>
+
+
+<div>@ViewBag.Message</div>
+
+<table class="table">
+
+    <tr>
+
+        <th>@Html.DisplayNameFor(model => model.TagID)</th>
+        <th>@Html.DisplayNameFor(model => model.TagName)</th>
+        <th>Action</th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(t => item.TagID)</td>
+            <td>@Html.DisplayFor(t => item.TagName)</td>
+           
+
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.TagID })
+                @Html.ActionLink("Delete", "Delete", new { id = item.TagID })
+             </td>
+
+        </tr>
+    }
+</table>

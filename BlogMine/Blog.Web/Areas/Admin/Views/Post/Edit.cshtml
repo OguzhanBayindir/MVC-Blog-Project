@@ -1,0 +1,78 @@
+﻿@using Blog.Web.Areas.Admin.Models.ViewModel
+@using Blog.Entity.Model
+@model PostViewModel
+     
+
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div>
+        @ViewBag.Mesaj
+    </div>
+    <fieldset>
+
+        @Html.HiddenFor(model => model.Post.PostID)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Post.Title)
+        </div>
+
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Post.Title)
+            @Html.ValidationMessageFor(model => model.Post.Title)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Post.PostContent)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Post.PostContent)
+            @Html.ValidationMessageFor(model => model.Post.PostContent)
+        </div>
+
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.Post.Photo)
+            <input type="file" name="photo" id="photo" />
+            @Html.ValidationMessageFor(model => model.Post.Photo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Post.CategoryId, Model.CategoryList)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Post.CategoryId, Model.CategoryList)
+            @Html.ValidationMessageFor(model => model.Post.CategoryId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Post.UserId, Model.UsersList)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Post.UserId, Model.UsersList)
+            @Html.ValidationMessageFor(model => model.Post.UserId)
+        </div>
+
+
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+
+        @if (ViewBag.result != null)
+        {
+        <div class="alert alert-@ViewBag.status" role="alert">@ViewBag.result</div>
+
+        }
+
+
+    </fieldset>
+}
